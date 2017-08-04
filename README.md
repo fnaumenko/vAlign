@@ -7,8 +7,8 @@ To do this each read in an initial artificial sequence should keep its location 
 
 ## Help
 Input:
-  -g|--gen <name>       genome size file, or genome library, or single nucleotide sequence
-  -c|--chr <chars>      treat stated chromosome only (all)
+      -g|--gen <name>       genome size file, or genome library, or single nucleotide sequence
+      -c|--chr <chars>      treat stated chromosome only (all)
   --min-scr <int>       score threshold for treated reads (lack)
   --char-case <OFF|ON>  recognize uppercase and lowercase characters in template and test
                         as different [OFF]
