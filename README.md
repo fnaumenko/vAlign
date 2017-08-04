@@ -31,7 +31,7 @@ Zipped files (.gz) are accepted too.
 
 ### Output
 vAlign outputs number of exactly matched reads, and number of wrong placed reads with 0, 1, 2, … N mismatches, where N is length of read.
-The output can be duplicated into a file (see -o|--out option).
+The output can be duplicated into a file (see ```-o|--out``` option).
 
 ### Options description
 ```-g|--gen <file>```<br>
@@ -39,25 +39,25 @@ Genome size file, or genome library, or single nucleotide sequence.
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.
 The difference between genome size file and genome library/file is that in the last case all the undefined regions in reference genome (gaps), will be excluded from calculation. 
 Undefined regions are regions with only ambiguous reference characters ‘N’ in them.
-The minimal length of accounting gaps is managed by --gap-len option.
+The minimal length of accounting gaps is managed by ```--gap-len``` option.
 For example, chromosome 1 from mm9 library contains 14 regions, separated by gaps with length more then 400 bps, and 10 regions, separated by gaps with length more then 1000.
-Indicating genome library has the same effect as -f|--fbed option, where ‘template’ is a set of defined regions.
+Indicating genome library has the same effect as ```-f|--fbed``` option, where ‘template’ is a set of defined regions.
 You can obtain genome library in UCSC or in ensemble storage. In the second case please copy genomic sequences with the same masked type only, f.e. unmasked (‘dna'), since program does not recognise mask’s types.
 Zipped .fa files can be mixed with unzipped.
-The single pointed FASTA file has the same effect as -c|--chr option.
+The single pointed FASTA file has the same effect as ```-c|--chr``` option.
 This option is required.
 
 ```-c|--chr <chars><br>```<br>
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.
-Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment. 
+Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment.<br>
 Default: all.
 
 ```--min-scr <int><br>```<br>
-Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.
+Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.<br>
 Default: all reads are accepted.
 
 ```--char-case <OFF|ON><br>```<br>
-Recognize uppercase and lowercase characters in template and test as different.
+Recognize uppercase and lowercase characters in template and test as different.<br>
 Default: OFF.
 
 ```--alarm```<br>
@@ -65,7 +65,7 @@ Output ambiguities, if they exist.
 For alignments such ambiguities can be duplicated reads or reads with different length (size).
 In some circumstances you need to be aware about these issues. There are two ways to know about them: detailed and summary.
 This option provides a detailed way. If it is pointed, information about type of ambiguity, number of line where it occurs, and resulting treatment would be printed each time when it happens.
-Summary way is managed by option –-stat.
+Summary way is managed by option ```–-stat```.
 Duplicated reads are not printed this way since they are considered as normal for alignment, but they are reported in summary way as well.
 
 ```--stat```<br>
@@ -74,5 +74,5 @@ In particular, this is a simple way to know the number of duplicated reads in al
 For more details about ambiguities see --alarm option.
 
 ```-o|--out```<br>
-Duplicate standard output to bioCC_out.txt file. It is analogue of tee Linux command and rather is useful by calling under Windows .
+Duplicate standard output to bioCC_out.txt file. It is analogue of tee Linux command and rather is useful by calling under Windows.
 
