@@ -24,14 +24,19 @@ Other:
 ## Details
 
 ### Input
-Aligned DNA sequence in BED format. 
+Aligned DNA sequence in BED format.
+
 Zipped files (.gz) are accepted too.
+
 Output
+
 vAlign outputs number of exactly matched reads, and number of wrong placed reads with 0, 1, 2, … N mismatches, where N is length of read.
+
 The output can be duplicated into a file (see -o|--out option).
 
 ### Options
 -g|--gen <file>
+
 Genome size file, or genome library, or single nucleotide sequence. 
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.
 The difference between genome size file and genome library/file is that in the last case all the undefined regions in reference genome (gaps), will be excluded from calculation. 
@@ -43,7 +48,9 @@ You can obtain genome library in UCSC or in ensemble storage. In the second case
 Zipped .fa files can be mixed with unzipped.
 The single pointed FASTA file has the same effect as -c|--chr option.
 This option is required.
+
 -c|--chr <chars>
+
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment. 
 Default: all.
