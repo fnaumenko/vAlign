@@ -12,11 +12,11 @@ To do this each read in an initial artificial sequence should keep its location 
   --min-scr <int>       score threshold for treated reads (lack)
   --char-case <OFF|ON>  recognize uppercase and lowercase characters in template and test
                         as different [OFF]
-Output:
+### Output:
 --alarm               output features ambiguities, if they exist
 --stat                output features ambiguities statistics, if they exist
 -o|--out              duplicate standard output to vAlign_out.txt file
-Other:
+### Other:
   -t|--time             output run time
   -v|--version          print program's version and quit
   -h|--help             print usage information and quit
@@ -25,18 +25,14 @@ Other:
 
 ### Input
 Aligned DNA sequence in BED format.
-
 Zipped files (.gz) are accepted too.
 
-Output
-
+### Output
 vAlign outputs number of exactly matched reads, and number of wrong placed reads with 0, 1, 2, … N mismatches, where N is length of read.
-
 The output can be duplicated into a file (see -o|--out option).
 
-### Options
+### Options description
 -g|--gen <file>
-
 Genome size file, or genome library, or single nucleotide sequence. 
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.
 The difference between genome size file and genome library/file is that in the last case all the undefined regions in reference genome (gaps), will be excluded from calculation. 
@@ -50,16 +46,18 @@ The single pointed FASTA file has the same effect as -c|--chr option.
 This option is required.
 
 -c|--chr <chars>
-
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment. 
 Default: all.
+
 --min-scr <int>
 Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.
 Default: all reads are accepted.
+
 --char-case <OFF|ON
 Recognize uppercase and lowercase characters in template and test as different.
 Default: OFF.
+
 --alarm
 Output ambiguities, if they exist.
 For alignments such ambiguities can be duplicated reads or reads with different length (size).
@@ -67,10 +65,12 @@ In some circumstances you need to be aware about these issues. There are two way
 This option provides a detailed way. If it is pointed, information about type of ambiguity, number of line where it occurs, and resulting treatment would be printed each time when it happens.
 Summary way is managed by option –-stat.
 Duplicated reads are not printed this way since they are considered as normal for alignment, but they are reported in summary way as well.
+
 --stat
 Output features ambiguities statistics, if they exist. Prints number of all recognized certain type ambiguities, and appropriate treatment.
 In particular, this is a simple way to know the number of duplicated reads in alignments.
 For more details about ambiguities see --alarm option.
+
 -o|--out
 Duplicate standard output to bioCC_out.txt file. It is analogue of tee Linux command and rather is useful by calling under Windows .
 
