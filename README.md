@@ -52,7 +52,7 @@ Treat stated chromosome only. Samples of option’s value: 1, 20, X.<br>
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment.<br>
 Default: all.
 
-```--min-scr <int><br>```<br>
+```--min-scr <int>```<br>
 Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.<br>
 Default: all reads are accepted.
 
