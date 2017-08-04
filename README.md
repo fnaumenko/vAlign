@@ -34,7 +34,7 @@ vAlign outputs number of exactly matched reads, and number of wrong placed reads
 The output can be duplicated into a file (see -o|--out option).
 
 ### Options description
-```-g|--gen <file>```
+```-g|--gen <file>```<br>
 Genome size file, or genome library, or single nucleotide sequence. 
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.
 The difference between genome size file and genome library/file is that in the last case all the undefined regions in reference genome (gaps), will be excluded from calculation. 
@@ -47,20 +47,20 @@ Zipped .fa files can be mixed with unzipped.
 The single pointed FASTA file has the same effect as -c|--chr option.
 This option is required.
 
-```-c|--chr <chars><br>```
+```-c|--chr <chars><br>```<br>
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment. 
 Default: all.
 
-```--min-scr <int><br>```
+```--min-scr <int><br>```<br>
 Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.
 Default: all reads are accepted.
 
-```--char-case <OFF|ON><br>```
+```--char-case <OFF|ON><br>```<br>
 Recognize uppercase and lowercase characters in template and test as different.
 Default: OFF.
 
-```--alarm```
+```--alarm```<br>
 Output ambiguities, if they exist.
 For alignments such ambiguities can be duplicated reads or reads with different length (size).
 In some circumstances you need to be aware about these issues. There are two ways to know about them: detailed and summary.
@@ -68,11 +68,11 @@ This option provides a detailed way. If it is pointed, information about type of
 Summary way is managed by option –-stat.
 Duplicated reads are not printed this way since they are considered as normal for alignment, but they are reported in summary way as well.
 
-```--stat```
+```--stat```<br>
 Output features ambiguities statistics, if they exist. Prints number of all recognized certain type ambiguities, and appropriate treatment.
 In particular, this is a simple way to know the number of duplicated reads in alignments.
 For more details about ambiguities see --alarm option.
 
-```-o|--out```
+```-o|--out```<br>
 Duplicate standard output to bioCC_out.txt file. It is analogue of tee Linux command and rather is useful by calling under Windows .
 
