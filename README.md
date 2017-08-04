@@ -47,7 +47,7 @@ Zipped .fa files can be mixed with unzipped.<br>
 The single pointed FASTA file has the same effect as ```-c|--chr``` option.<br>
 This option is required.
 
-```-c|--chr <chars><br>```<br>
+```-c|--chr <chars>```<br>
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.<br>
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment.<br>
 Default: all.
@@ -56,7 +56,7 @@ Default: all.
 Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.<br>
 Default: all reads are accepted.
 
-```--char-case <OFF|ON><br>```<br>
+```--char-case <OFF|ON>```<br>
 Recognize uppercase and lowercase characters in template and test as different.<br>
 Default: OFF.
 
