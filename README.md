@@ -71,7 +71,7 @@ Duplicated reads are not printed this way since they are considered as normal fo
 ```--stat```<br>
 Output features ambiguities statistics, if they exist. Prints number of all recognized certain type ambiguities, and appropriate treatment.
 In particular, this is a simple way to know the number of duplicated reads in alignments.
-For more details about ambiguities see --alarm option.
+For more details about ambiguities see ```--alarm``` option.
 
 ```-o|--out```<br>
 Duplicate standard output to bioCC_out.txt file. It is analogue of tee Linux command and rather is useful by calling under Windows.
