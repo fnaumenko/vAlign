@@ -6,24 +6,22 @@ To do this each read in an initial artificial sequence should keep its location 
 vAlign [options] -g|--gen <name> sequence
 
 ## Help
-### Input:
-  -g|--gen <name>       genome size file, or genome library, or single nucleotide sequence
-
-  -c|--chr <chars>      treat stated chromosome only (all)
-
-  --min-scr <int>       score threshold for treated reads (lack)
-
+```
+Input:
+  -g|--gen <name>       genome size file, or genome library, or single nucleotide sequence<br>
+  -c|--chr <chars>      treat stated chromosome only (all)<br>
+  --min-scr <int>       score threshold for treated reads (lack)<br>
   --char-case <OFF|ON>  recognize uppercase and lowercase characters in template and test
-                        as different [OFF]
-
-### Output:
+                        as different [OFF]<br>
+Output:
   --alarm               output features ambiguities, if they exist
   --stat                output features ambiguities statistics, if they exist
   -o|--out              duplicate standard output to vAlign_out.txt file
-### Other:
+Other:
   -t|--time             output run time
   -v|--version          print program's version and quit
   -h|--help             print usage information and quit
+  ```
 
 ## Details
 
@@ -36,7 +34,8 @@ vAlign outputs number of exactly matched reads, and number of wrong placed reads
 The output can be duplicated into a file (see -o|--out option).
 
 ### Options description
--g|--gen <file>
+```-g|--gen <file>```
+
 Genome size file, or genome library, or single nucleotide sequence. 
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.
 The difference between genome size file and genome library/file is that in the last case all the undefined regions in reference genome (gaps), will be excluded from calculation. 
@@ -49,16 +48,17 @@ Zipped .fa files can be mixed with unzipped.
 The single pointed FASTA file has the same effect as -c|--chr option.
 This option is required.
 
--c|--chr <chars>
+```-c|--chr <chars><br>```
+
 Treat stated chromosome only. Samples of option’s value: 1, 20, X.
 Reduces run time on 1.5-20 times depends of how far this chromosome is placed in an alignment. 
 Default: all.
 
---min-scr <int>
+--min-scr <int><br>
 Score threshold for treated reads. Reads with the score equal or less then stated will be ignored.
 Default: all reads are accepted.
 
---char-case <OFF|ON
+--char-case <OFF|ON><br>
 Recognize uppercase and lowercase characters in template and test as different.
 Default: OFF.
 
