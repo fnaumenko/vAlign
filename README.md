@@ -6,7 +6,7 @@ To do this each read in an initial artificial sequence should keep its location 
 #### vAlign [options] -g|--gen <name> sequence
 
 ## Help
-Input:
+### Input:
       -g|--gen <name>       genome size file, or genome library, or single nucleotide sequence
       -c|--chr <chars>      treat stated chromosome only (all)
   --min-scr <int>       score threshold for treated reads (lack)
