@@ -5,7 +5,7 @@ To do this each read in an initial artificial sequence should keep its location 
 It runs on the command line under Windows, Linux and Mac OS X.
 
 ## Usage
-vAlign [options] -g|--gen <name> sequence
+```vAlign [options] -g|--gen <name> sequence```
 
 ## Help
 ```
