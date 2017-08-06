@@ -36,6 +36,8 @@ vAlign outputs number of exactly matched reads, and number of wrong placed reads
 The output can be duplicated into a file (see ```-o|--out``` option).
 
 ### Options description
+Non-numeric option values are case insensitive.
+
 ```-g|--gen <file>```<br>
 Genome size file, or genome library, or single nucleotide sequence. <br>
 Genome library is a directory contained nucleotide sequences for each chromosome in FASTA format.<br>
@@ -44,7 +46,7 @@ Undefined regions are regions with only ambiguous reference characters ‘N’ i
 The minimal length of accounting gaps is managed by ```--gap-len``` option.<br>
 For example, chromosome 1 from mm9 library contains 14 regions, separated by gaps with length more then 400 bps, and 10 regions, separated by gaps with length more then 1000.<br>
 Indicating genome library has the same effect as ```-f|--fbed``` option, where ‘template’ is a set of defined regions.<br>
-You can obtain genome library in  [UCSC](ftp://hgdownload.soe.ucsc.edu/goldenPath/) or in [Ensemble](ftp://ftp.ensembl.org/pub/release-73/fasta) storage. In the second case please copy genomic sequences with the same masked type only, f.e. unmasked (‘dna'), since program does not recognise mask’s types.<br>
+You can obtain genome library in UCSC ftp://hgdownload.soe.ucsc.edu/goldenPath/ or in Ensemble ftp://ftp.ensembl.org/pub/release-73/fasta storage. In the second case please copy genomic sequences with the same masked type only, f.e. unmasked (‘dna'), since program does not recognise mask’s types.<br>
 Zipped .fa files can be mixed with unzipped.<br>
 The single pointed FASTA file has the same effect as ```-c|--chr``` option.<br>
 This option is required.
