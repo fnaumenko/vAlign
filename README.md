@@ -47,7 +47,7 @@ Enumerable option values are case insensitive.
 Reference genome library or single nucleotide sequence.<br>
 Genome library is a directory containing nucleotide sequences for each chromosome in FASTA format.<br>
 If ```name``` is a .fa[.gz] file, **vALign** accepts the corresponding chromosome as the only treated.<br>
-Otherwise first the program searches for .fa files in the directory name. If there are no such files in this directory, **vALign** searches for .fa.gz files.<br>
+Otherwise first the program searches for .fa files in the directory ```name```. If there are no such files in this directory, **vALign** searches for .fa.gz files.<br>
 If chromosome is stated by option ```–c|--chr```, the program searches for the corresponding .fa[.gz] file.<br>
 One can obtain a genome library in UCSC ftp://hgdownload.soe.ucsc.edu/goldenPath/ or in Ensemble ftp://ftp.ensembl.org/pub/release-73/fasta storage. 
 In the second case please copy genomic sequences with the same masked type only, f.e. unmasked (‘dna'), since program does not recognise mask’s types.<br>
@@ -83,6 +83,6 @@ If it is stated, information about type of ambiguity, number of line where it oc
 Duplicated reads are not printed when using this method as they are considered normal for alignment, but they are reported in the summary method, see ```-i|--info``` option.
 
 ```-o|--out```<br>
-Duplicate standard output to bioCC_out.txt file. 
+Duplicate standard output to **bioCC_out.txt** file. 
 It is an analogue of the *tee* Linux command and is rather useful by calling **vAling** under Windows.
 
