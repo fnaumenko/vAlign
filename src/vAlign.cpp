@@ -1,6 +1,15 @@
 /*
- * verifying alignment
- * Copyright (C) 2016 Fedor Naumenko
+	vAlign is a fast verifier of reads of aligned DNA sequence,
+	recalled from initial artificial FastQ sequence.
+	It compares the original and actual coordinates of each read
+	and prints statistics of right and wrong mappings.
+	
+	Copyright (C) 2017 Fedor Naumenko (fedor.naumenko@gmail.com)
+
+	This program is free software. It is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the	GNU General Public License for more details.
  */
 
 #include "Data.h"
@@ -22,27 +31,31 @@ enum eOptGroup	{ oINPUT, oOUTPUT, oOTHER };	// oOTHER should be the last
 const BYTE	Options::_GroupCount = oOTHER + 1;	// count of option groups in help
 
 const char* Options::_OptGroups [] = {			// names of option groups in help
-	"Input", "Ambig output", "Other"
+	"Input", "Output", "Other"
 };
 
+// --info option: types of info notations
+const char* infos [] = { "NOTE", "STAT" };	// corresponds to eInfo; iOFF is hidden
+
+
+//	{ char,	str,	Signs,	type,	group,	defVal,	minVal,	maxVal,	strVal,	descr }
+// field 7: vUNDEF if value is prohibited
+// field 6: vUNDEF if no default value should be printed
 Options::Option Options::_Options [] = {
-	{ 'g', "gen",	1, true, tNAME, oINPUT, vUNDEF, 0, 0, NULL,
-	"genome size file, or genome library, or single nucleotide sequence" },
-	//{ 'T', "templ",	0, true, tNAME, oINPUT, vUNDEF, 0, 0, NULL,
-	//"template sequence" },
-	{ 'c',Chrom::Abbr,0,true,tCHAR, oINPUT, vUNDEF, 0, 0, NULL,
-	"treat stated chromosome only (all)" },
-	{ HPH, "min-scr",	0, true, tINT, oINPUT, vUNDEF, 0, 1000, NULL, "score threshold for treated reads (lack)" },
-	{ HPH, "char-case",0,true, tENUM,	oINPUT, FALSE,	0, 2, (char*)Options::Booleans,
+	{ 'g', "gen",	1, tNAME, oINPUT, vUNDEF, 0, 0, NULL,
+	"reference genome library, or single nucleotide sequence. Required" },
+	{ 'c', Chrom::Abbr,	0,	tCHAR,	oINPUT, vUNDEF, 0, 0, NULL,	"treat stated chromosome only" },
+	{ HPH, "min-scr",	0, tINT,	oINPUT, vUNDEF, 0, 1000, NULL, "score threshold for treated reads (lack)" },
+	{ HPH, "char-case",	0,	tENUM,	oINPUT, FALSE,	0, 2, (char*)Options::Booleans,
 	"recognize uppercase and lowercase characters in template and test\nas different" },
-	{ HPH, "alarm",	0, false,tENUM, oOUTPUT,FALSE,	0, 2, NULL,
-	"output features ambiguities, if they exist" },
-	{ HPH, "stat",	0, false,tENUM, oOUTPUT,FALSE,	0, 2, NULL,
-	"output features ambiguities statistics, if they exist" },
-	{ 'o', "out",	0, false,tENUM, oOUTPUT,FALSE,	0, 2, NULL, HelpOutFile.c_str() },
-	{ 't', "time",	0, false,tENUM, oOTHER,	FALSE,	0, 2, NULL, "output run time" },
-	{ 'v', Version,	0, false,tVERS,oOTHER, vUNDEF, 0, 0, NULL, "print program's version and quit" },
-	{ 'h', "help",	0, false,tHELP,oOTHER, vUNDEF, 0, 0, NULL, "print usage information and quit" }
+	{ 'i', "info",	0,	tENUM,	oOUTPUT, Bed::iOFF,	Bed::iNOTE, Bed::iSTAT, (char*)infos,
+	"output summary information about feature ambiguities, if they exist:\n? - notice, ? - statistics " },
+	{ 'w', "warn",	0,	tENUM,	oOUTPUT, FALSE,	vUNDEF, 2, NULL,
+	"output each feature ambiguity, if they exist" },
+	{ 'o', "out",	0,	tENUM,	oOUTPUT,FALSE,	vUNDEF, 2, NULL, HelpOutFile.c_str() },
+	{ 't', "time",	0,	tENUM,	oOTHER,	FALSE,	vUNDEF, 2, NULL, "output run time" },
+	{ 'v', Version,	0,	tVERS,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print program's version and quit" },
+	{ 'h', "help",	0,	tHELP,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print usage information and quit" }
 };
 
 const BYTE	Options::_OptCount = oHELP + 1;
@@ -57,48 +70,38 @@ dostream dout(cout, outfile);	// stream's duplicator
 /*****************************************/
 int main(int argc, char* argv[])
 {
-	//const char* a = "12345-6789/2";
-	//long b = atol(a+6);
-	//cout << b << EOL;	return 0;
-	if (argc < 2)	
-	{ Options::PrintUsage(false);	return 0; }		// output tip
+	if (argc < 2)	return Options::PrintUsage(false);			// output tip
+	int fileInd = Options::Tokenize(argc, argv);
+	if( fileInd < 0 )	return 1;								// wrong option
+	if(!Chrom::SetStatedID(Options::GetSVal(oCHROM))) return 1;	// wrong chrom name
 
-		int fileInd = Options::Tokenize(argc, argv, (Tested + Alignment).c_str());
-	if( fileInd < 0 )	return 1;		// wrong option
 	int ret = 0;						// main() return code
-
-	bool getTime = Options::GetBVal(oTIME);
 	if( Options::GetBVal(oOUTFILE) )	outfile.open(OutFile.c_str());
-	Timer timer(getTime);
-	timer.Start();
+	Timer::Enabled = Options::GetBVal(oTIME);
+	Timer timer;
 	try {
 		// check file names first of all
-		const char* genName	  = FS::CheckedFileDirName(oGFILE);
-		//const char* templName = FS::CheckedFileName(oTEMPL);
-		const char* testlName = FS::CheckedFileName(argv[fileInd]);
-		bool alarm	= Options::GetBVal(oALARM);		// print ambiguity messages
-		bool stats	= Options::GetBVal(oSTATS);		// print ambiguity statistics
-		chrid cID	= Chrom::ID(Options::GetSVal(oCHROM));
-		
+		const char* gName = FS::CheckedFileDirName(oGFILE);
+		const char* aName = FS::CheckedFileName(argv[fileInd]);
+		ChromFiles cFiles(FS::CheckedFileDirName(oGFILE));
+		ChromSizes cSizes(cFiles);
+
 		BedR test((Tested + Alignment + MSGSEP_BLANK).c_str(),
-			testlName, cID, true, getTime, true, alarm, stats, true, true, Options::GetIVal(oMINSCR));
+			aName, &cSizes, true, true, 
+			Bed::eInfo(Options::GetIVal(oINFO)), 
+			Options::GetBVal(oALARM),
+			true, true, Options::GetIVal(oMINSCR));
 		if( test.ReadNameType() != Read::nmPos )
 			Err("Read's name does not contain read's initial position").Throw();
 
-		Timer timer(getTime);
-		timer.Start();
-		vAlign(ChromFiles(genName, cID), test);
-		timer.Stop();
+		vAlign(cFiles, test);
 	}
 	catch(Err &e)		{ ret = 1;	dout << e.what() << EOL; }
 	catch(exception &e)	{ ret = 1;	dout << e.what() << EOL; }
 	catch(...)			{ ret = 1;	dout << "Unregistered error\n"; }
 
-	timer.Stop("total: ", false, true);
+	timer.Stop();
 	if( outfile.is_open() )		outfile.close();	// in case of holding execution by user
-//#ifdef OS_Windows
-//	system("pause");
-//#endif
 	return ret;
 }
 
@@ -115,6 +118,7 @@ vAlign::vAlign(const ChromFiles& cFiles, BedR &bedR) :
 	_mismAccums.Reserve(Read::Len+1);
 	for(BedR::cIter cit=bedR.cBegin(); cit!=bedR.cEnd(); cit++) {
 		cID = CID(cit);
+		if(!Chrom::StatedAll && Chrom::StatedID() != cID)	continue;
 		dout << Chrom::AbbrName(cID) << EOL;
 		_preciseAccum.Reset();
 		_mismAccums.Clear();
@@ -122,54 +126,13 @@ vAlign::vAlign(const ChromFiles& cFiles, BedR &bedR) :
 		ritend = bedR.ReadsEnd(cit);
 		for(rit=bedR.ReadsBegin(cit); rit!=ritend; rit++)
 			if( rit->InitCID == cID )
-				if( rit->Pos==rit->Num )
+				if( rit->Pos==rit->Num )	// Pos: actual start position, Num: initial start position
 					_preciseAccum.AddRead(rit->Score);
 				else
 					_mismAccums[ VerifyRead(nts, rit->Num, rit->Pos) ].AddRead(rit->Score);
 		PrintStats(cID, bedR.ReadsCount(cID));
 	}
 }
-
-//vAlign::vAlign(const ChromFiles& cFiles, BedR &bedRtempl, BedR &bedRTest)
-//{
-//	_caseDiff = Options::GetBVal(oCCASE);
-//	_maxScore = bedRTest.MaxScore();
-//	BedR::ItemsIter rit1, rit2, itr1begin, itr2begin, rit1end, rit2end;
-//	BedR::cIter cit2;
-//	readlen errCnt;
-//
-//	if( (Read::Len = bedRtempl.ReadLen()) != bedRTest.ReadLen() )
-//		Err("different length of read").Throw();
-//	_mismAccums.Init(Read::Len+1);
-//
-//	Timer timer(true);
-//	timer.Start();
-//	for(BedR::cIter cit1=bedRtempl.cBegin(); cit1!=bedRtempl.cEnd(); cit1++) {
-//		if( !bedRTest.FindChrom(CID(cit1)) )	continue;
-//		
-//		dout << Chrom::AbbrName(CID(cit1)) << EOL;
-//		Nts nts( cFiles.FileName(CID(cit1)), 0, true, false);
-//		cit2 = bedRTest.GetIter(CID(cit1));
-//		bedRtempl.SortByNumb(cit1);
-//		bedRTest.SortByNumb(cit2);
-//		
-//		itr1begin = bedRtempl.ReadsBegin(cit2);
-//		itr2begin = bedRTest.ReadsBegin(cit2);
-//		rit1end = bedRtempl.ItemsEnd(cit1);
-//		rit2end = bedRTest.ItemsEnd(cit2);
-//
-//		for(rit1=itr1begin; rit1!=rit1end; rit1++)
-//			for(rit2=itr2begin; rit2!=rit2end; rit2++) {
-//				if( rit1->Numb < rit2->Numb)	break;
-//				if( rit1->Numb == rit2->Numb ) {
-//					errCnt = rit1->Pos==rit2->Pos ? 0 : VerifyRead(nts, rit1->Pos, rit2->Pos);
-//					_mismAccums[errCnt].AddRead(rit2->Score);
-//					itr2begin = rit2;
-//					break;
-//				}
-//			}
-//	}
-//}
 
 // Gets count of mismatches for tested Read
 //	@nts: chromosome sequence
@@ -208,10 +171,10 @@ void vAlign::PrintStats(chrid cID, size_t rCnt)
 		_mismAccums[i].Print(_maxScore);
 		cnt += _mismAccums[i].Count();
 	}
-	dout << "total reads at chrom " << Chrom::Name(cID) << ":\t" << cnt << TAB
+	dout << "total reads per chrom " << Chrom::Name(cID) << ":\t" << cnt << TAB
 		 << sPercent(cnt, rCnt, 0, 0, false) //<< EOL;
 		 << TAB << rCnt << EOL;
 	cnt = rCnt - cnt;
-	dout << "reads at different chrom:\t" << cnt << TAB << sPercent(cnt, rCnt, 0, 0, false) << EOL;
+	dout << "reads per different chroms:\t" << cnt << TAB << sPercent(cnt, rCnt, 0, 0, false) << EOL;
 }
 /************************ end of class vAlign ************************/

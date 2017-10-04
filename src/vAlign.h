@@ -6,8 +6,8 @@ enum optValue {
 	oCHROM,
 	oMINSCR,
 	oCCASE,
+	oINFO,
 	oALARM,
-	oSTATS,
 	oOUTFILE,
 	oTIME,
 	oVERSION,
@@ -69,7 +69,6 @@ private:
 	//	@testPos: start position of tested Read
 	//	return: count of testet Read's mismatches in comparison with template Read
 	readlen VerifyRead(const Nts& nts, chrlen templPos, chrlen testPos);
-
 
 public:
 	vAlign(const ChromFiles& cFiles, BedR &bedR);
