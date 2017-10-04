@@ -83,6 +83,6 @@ If it is stated, information about type of ambiguity, number of line where it oc
 Duplicated reads are not printed when using this method as they are considered normal for alignment, but they are reported in the summary method, see ```-i|--info``` option.
 
 ```-o|--out```<br>
-Duplicate standard output to **bioCC_out.txt** file. 
+Duplicate standard output to **vAlign_out.txt** file. 
 It is an analogue of the *tee* Linux command and is rather useful by calling **vAling** under Windows.
 
