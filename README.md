@@ -31,7 +31,8 @@ Go to the desired directory and type commands:<br>
 ```wget -O vAlign.zip https://github.com/fnaumenko/vAlign/archive/1.0.zip```<br>
 ```unzip vAlign.zip```<br>
 ```cd vAlign-1.0```<br>
-```make```<br>
+```make```
+
 If **zlib** is not installed on your system, a message will be displayed from the linker.<br>
 In that case you can compile the program without the ability to work with .gz files. 
 To do this, open *makefile* in any text editor, uncomment last macro in the second line, comment third line, save *makefile*, and try again ```make```.<br>
