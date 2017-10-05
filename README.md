@@ -14,10 +14,6 @@ It runs on the command line under Windows, Linux, and possibly Mac OS X (last op
 Try this way first. 
 Download proper archive **vAlign-YOUR_OS-x64**.zip (or .tar.gz), unzip it and call **vALign**.
 ### Compiling in Linux
-Required libraries:
-g++
-zlib (optionally)
-
 Required libraries:<br>
 g++<br>
 zlib (optionally)
