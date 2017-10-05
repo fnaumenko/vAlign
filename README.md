@@ -12,7 +12,7 @@ It runs on the command line under Windows, Linux, and possibly Mac OS X (last op
 ## Installation
 ### Ready executable file
 Try this way first. 
-Download proper archive **vAlign-*YOUR_OS*-x64**.zip (or .tar.gz), unzip it and call **vALign**.
+Download proper archive **vAlign-YOUR_OS-x64**.zip (or .tar.gz), unzip it and call **vALign**.
 ### Compiling in Linux
 Required libraries:
 g++
@@ -23,18 +23,16 @@ g++<br>
 zlib (optionally)
 
 Go to the desired directory and type commands:<br>
-```
-wget https://github.com/fnaumenko/vAlign/archive/1.0.zip
-unzip 1.0.zip
-```
-(if wget version is 1.11 or earlier, it eliminates downloaded file extension. In that case type ```unzip 1.0```)<br>
+```wget https://github.com/fnaumenko/vAlign/archive/1.0.zip```<br>
+```unzip 1.0.zip```<br>
+(if **wget** version is 1.11 or earlier, it eliminates downloaded file extension. In that case type ```unzip 1.0```)<br>
 ```cd vAlign-1.0```<br>
 ```make```
 
-If zlib is not installed on your system, a message will be displayed from the linker.<br>
+If **zlib** is not installed on your system, a message will be displayed from the linker.<br>
 In that case you can compile the program without the ability to work with .gz files. 
 To do this, open makefile in any text editor, uncomment last macro in the second line, comment third line, save makefile, and try again ```make```.<br>
-To be sure about zlib on your system, type ```whereis zlib```.
+To be sure about **zlib** on your system, type ```whereis zlib```.
 
 ## Usage
 ```vAlign [options] -g|--gen <name> sequence```
