@@ -20,7 +20,7 @@ Go to the desire directory and type commands:<br>
 ```chmod +x vAlign```
 
 **Windows**<br>
-Download archive from here and unzip by any archiver, for instance **WinRar**.
+Download archive from [here](https://github.com/fnaumenko/vAlign/releases/download/1.0/vAlign-Windows-x64.zip) and unzip by any archiver, for instance **WinRar**.
 
 ### Compiling in Linux
 Required libraries:<br>
