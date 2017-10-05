@@ -12,13 +12,15 @@ It runs on the command line under Windows, Linux, and possibly Mac OS X (last op
 ## Installation
 ### Ready executable file
 Try this way first. 
-####Linux
+
+**Linux**<br>
 Go to the desire directory and type commands:
 ```wget -O vAlign.gz https://github.com/fnaumenko/vAlign/releases/download/1.0/vAlign-Linux-x64.gz```<br>
 ```gzip -d vAlign.gz```<br>
 ```chmod +x vAlign```
-####Windows
-Download archive from here and unzip by any archiver, for instance WinRar.
+
+**Windows**<br>
+Download archive from here and unzip by any archiver, for instance **WinRar**.
 
 ### Compiling in Linux
 Required libraries:<br>
@@ -26,12 +28,10 @@ g++<br>
 zlib (optionally)
 
 Go to the desired directory and type commands:<br>
-```
-wget -O vAlign.zip https://github.com/fnaumenko/vAlign/archive/1.0.zip
-unzip vAlign.zip
-cd vAlign-1.0
-make
-```
+```wget -O vAlign.zip https://github.com/fnaumenko/vAlign/archive/1.0.zip```<br>
+```unzip vAlign.zip```<br>
+```cd vAlign-1.0```<br>
+```make``````<br>
 If **zlib** is not installed on your system, a message will be displayed from the linker.<br>
 In that case you can compile the program without the ability to work with .gz files. 
 To do this, open *makefile* in any text editor, uncomment last macro in the second line, comment third line, save *makefile*, and try again ```make```.<br>
