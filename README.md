@@ -1,5 +1,5 @@
 # vAlign
-**V**erify **Align**ment is a fast verifier of reads forming the aligned DNA sequence, which is recalled from initial artificial[FastQ](https://en.wikipedia.org/wiki/FASTQ_format) sequence. 
+**V**erify **Align**ment is a fast verifier of reads forming the aligned DNA sequence, which is recalled from initial artificial [FastQ](https://en.wikipedia.org/wiki/FASTQ_format) sequence. 
 It compares the original and actual coordinates of each read and prints statistics of right and wrong mappings.
 
 To do this each read in an initial artificial sequence should keep its location as a part of its name. 
