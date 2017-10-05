@@ -1165,7 +1165,7 @@ class ChromSizes : public Chroms<chrlen>
  */
 {
 private:
-	//mutable genlen _gsize;		// size of whole genome
+	mutable genlen _gsize;		// size of whole genome
 //#ifdef _BIOCC
 	//mutable chrlen _minsize;	// minimal size of chromosome
 //#endif	// _BIOCC
@@ -1212,7 +1212,7 @@ public:
 	inline chrlen Size (chrid cID) const { return At(cID); }
 
 	// Gets total size of genome.
-	//genlen GenSize() const;
+	genlen GenSize() const;
 //#ifdef _BIOCC
 	//chrlen MinSize() const;
 //#endif	// _BIOCC
@@ -1287,7 +1287,7 @@ public:
 	//	@cSizes: uninitialized pointer to chrom sizes; 
 	//	after the constructor is completed, it is initialized with a new chrom sizes instance
 	//	@minGapLen: minimal length which defines gap as a real gap
-	GenomeRegions(const char* gName, const ChromSizes* cSizes, short minGapLen);
+	GenomeRegions(const char* gName, const ChromSizes*& cSizes, short minGapLen);
 
 	// Gets true if this instance has single Region for each chromosome
 	// (is initialized from chrom.sizes file)

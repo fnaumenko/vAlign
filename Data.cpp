@@ -983,18 +983,19 @@ ChromSizes::ChromSizes (const ChromFiles& cFiles, bool printReport)
 	if(updated) {
 		Write(fName);
 		dout << MsgDone;
-		tm.Stop(false);
+		tm.Stop(true, false);
+		dout << EOL;
 	}
 }
 
 // Gets total size of genome
-//genlen ChromSizes::GenSize() const
-//{
-//	if( !_gsize )
-//		for(cIter it=cBegin(); it!=cEnd(); it++)
-//			_gsize += it->second;
-//	return _gsize;
-//}
+genlen ChromSizes::GenSize() const
+{
+	if( !_gsize )
+		for(cIter it=cBegin(); it!=cEnd(); it++)
+			_gsize += it->second;
+	return _gsize;
+}
 
 //#ifdef _BIOCC
 // Gets miminal size of chromosome
@@ -1196,7 +1197,7 @@ ChromRegions::ChromRegions(const string& commName, chrlen cID, short minGapLen)
 //
 //}
 
-GenomeRegions::GenomeRegions(const char* gName, const ChromSizes* cSizes, short minGapLen)
+GenomeRegions::GenomeRegions(const char* gName, const ChromSizes*& cSizes, short minGapLen)
 	: _minGapLen(minGapLen), _singleRgn(FS::HasExt(gName, ChromSizes::Ext))
 {
 	if(_singleRgn) {
