@@ -74,7 +74,7 @@ Enumerable option values are case insensitive.
 
 ```-g|--gen <file>```<br>
 Reference genome library or single nucleotide sequence.<br>
-Genome library is a directory containing nucleotide sequences for each chromosome in FASTA format.<br>
+Genome library is a directory containing nucleotide sequences for each chromosome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format.<br>
 If ```name``` is a .fa[.gz] file, **vALign** accepts the corresponding chromosome as the only treated.<br>
 Otherwise first the program searches for .fa files in the directory ```name```. If there are no such files in this directory, **vALign** searches for .fa.gz files.<br>
 If chromosome is stated by option ```–c|--chr```, the program searches for the corresponding .fa[.gz] file.<br>
