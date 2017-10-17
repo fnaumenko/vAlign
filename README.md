@@ -11,8 +11,7 @@ If initial reads do not answer this requirement, the treatment will be rejected.
 It runs on the command line under Linux and Windows.
 
 ## Installation
-### Ready executable file
-Try this way first. 
+### Executable file
 
 **Linux**<br>
 Go to the desire directory and type commands:<br>
@@ -74,7 +73,7 @@ Compressed files in gzip format (.gz) are acceptable.
 ### Options
 Enumerable option values are case insensitive.
 
-```-g|--gen <file>```<br>
+```-g|--gen <name>```<br>
 Reference genome library or single nucleotide sequence.<br>
 Genome library is a directory containing nucleotide sequences for each chromosome in [FASTA](https://en.wikipedia.org/wiki/FASTA_format) format.<br>
 If ```name``` is a .fa[.gz] file, **vALign** accepts the corresponding chromosome as the only treated.<br>
@@ -119,7 +118,7 @@ Duplicated reads are not printed when using this method as they are considered n
 but they are reported in the summary method, see ```-i|--info``` option.
 
 ```-o|--out```<br>
-Duplicate standard output to **bioCC_out.txt** file. 
+Duplicate standard output to **vAling_out.txt** file. 
 It is an analogue of the *tee* Linux command and is rather useful by calling **vAling** under Windows.
 
 ##
