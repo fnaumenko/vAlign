@@ -22,8 +22,6 @@ const string Product::Title = "vAlign";
 const string Product::Version = "1.0";
 const string Product::Descr = "verify Alignment";
 
-const string Tested = "tested";
-const string Alignment = " alignment";
 const string OutFile = string(Product::Title) +  "_out.txt";
 const string HelpOutFile = "duplicate standard output to " + OutFile + " file";
 
@@ -35,27 +33,26 @@ const char* Options::_OptGroups [] = {			// names of option groups in help
 };
 
 // --info option: types of info notations
-const char* infos [] = { "NOTE", "STAT" };	// corresponds to eInfo; iOFF is hidden
+const char* infos [] = { "NM", "CNT", "STAT" };	// corresponds to eInfo; iNONE and iLAC are hidden
 
-
-//	{ char,	str,	Signs,	type,	group,	defVal,	minVal,	maxVal,	strVal,	descr }
+//	{ char,	str,	Signs,	type,	group,	defVal,	minVal,	maxVal,	strVal,	descr, addDescr }
 // field 7: vUNDEF if value is prohibited
 // field 6: vUNDEF if no default value should be printed
 Options::Option Options::_Options [] = {
 	{ 'g', "gen",	1, tNAME, oINPUT, vUNDEF, 0, 0, NULL,
-	"reference genome library or single nucleotide sequence. Required" },
-	{ 'c', Chrom::Abbr,	0,	tCHAR,	oINPUT, vUNDEF, 0, 0, NULL,	"treat stated chromosome only" },
-	{ HPH, "min-scr",	0, tINT,	oINPUT, vUNDEF, 0, 1000, NULL, "score threshold for treated reads (lack)" },
+	"reference genome library or single nucleotide sequence.", NULL },
+	{ 'c', Chrom::Abbr,	0,	tCHAR,	oINPUT, vUNDEF, 0, 0, NULL,	"treat specified chromosome only", NULL },
+	{ HPH, "min-scr",	0, tINT,	oINPUT, vUNDEF, 0, 1000, NULL, "score threshold for treated reads", NULL },
 	{ HPH, "char-case",	0,	tENUM,	oINPUT, FALSE,	0, 2, (char*)Options::Booleans,
-	"recognize uppercase and lowercase characters in template and test\nas different" },
-	{ 'i', "info",	0,	tENUM,	oOUTPUT, Bed::iOFF,	Bed::iNOTE, Bed::iSTAT, (char*)infos,
-	"output summary information about feature ambiguities, if they exist:\n? - notice, ? - statistics " },
+	"recognize uppercase and lowercase characters in template and test\nas different", NULL },
+	{ 'i', "info",	0,	tENUM, oOUTPUT,	Obj::iSTAT, Obj::iNM, Obj::iSTAT, (char*)infos,
+	"print information about file:\n? - name only, ? - number of reads, ? - statistics", NULL },
 	{ 'w', "warn",	0,	tENUM,	oOUTPUT, FALSE,	vUNDEF, 2, NULL,
-	"output each feature ambiguity, if they exist" },
-	{ 'o', "out",	0,	tENUM,	oOUTPUT,FALSE,	vUNDEF, 2, NULL, HelpOutFile.c_str() },
-	{ 't', "time",	0,	tENUM,	oOTHER,	FALSE,	vUNDEF, 2, NULL, "output run time" },
-	{ 'v', Version,	0,	tVERS,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print program's version and quit" },
-	{ 'h', "help",	0,	tHELP,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print usage information and quit" }
+	"print each read ambiguity, if they exist" },
+	{ 'o', "out",	0,	tENUM,	oOUTPUT,FALSE,	vUNDEF, 2, NULL, HelpOutFile.c_str(), NULL },
+	{ 't', "time",	0,	tENUM,	oOTHER,	FALSE,	vUNDEF, 2, NULL, "print run time", NULL },
+	{ 'v', Version,	0,	tVERS,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print program's version", NULL },
+	{ 'h', "help",	0,	tHELP,	oOTHER,	vUNDEF, vUNDEF, 0, NULL, "print usage information", NULL }
 };
 
 const BYTE	Options::_OptCount = oHELP + 1;
@@ -86,11 +83,10 @@ int main(int argc, char* argv[])
 		ChromFiles cFiles(FS::CheckedFileDirName(oGFILE));
 		ChromSizes cSizes(cFiles);
 
-		BedR test((Tested + Alignment + MSGSEP_BLANK).c_str(),
-			aName, &cSizes, true, true, 
-			Bed::eInfo(Options::GetIVal(oINFO)), 
-			Options::GetBVal(oALARM),
-			true, true, Options::GetIVal(oMINSCR));
+		BedR test("test alignment", aName, &cSizes, 
+			Obj::eInfo (Options::GetIVal(oINFO)), 
+			true, true, Options::GetBVal(oALARM),
+			true,		Options::GetIVal(oMINSCR));
 		if( test.ReadNameType() != Read::nmPos )
 			Err("Read's name does not contain read's initial position").Throw();
 
