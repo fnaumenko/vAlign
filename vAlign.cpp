@@ -25,6 +25,8 @@ const string Product::Descr = "verify Alignment";
 const string OutFile = string(Product::Title) +  "_out.txt";
 const string HelpOutFile = "duplicate standard output to " + OutFile + " file";
 
+const char*	ProgParam = "sequence";	// program parameter
+
 enum eOptGroup	{ oINPUT, oOUTPUT, oOTHER };	// oOTHER should be the last 
 const BYTE	Options::_GroupCount = oOTHER + 1;	// count of option groups in help
 
@@ -58,7 +60,7 @@ Options::Option Options::_Options [] = {
 const BYTE	Options::_OptCount = oHELP + 1;
 const BYTE	Options::_UsageCount = 1;		// count of 'Usage' variants in help
 const Options::Usage Options::_Usages[] = {	// content of 'Usage' variants in help
-	{	vUNDEF,	" sequence"	}
+	{ vUNDEF, ProgParam, true, "verified alignment in bed format" }
 };
 
 ofstream outfile;		// file ostream duplicated cout; inizialised by file in code
@@ -68,7 +70,7 @@ dostream dout(cout, outfile);	// stream's duplicator
 int main(int argc, char* argv[])
 {
 	if (argc < 2)	return Options::PrintUsage(false);			// output tip
-	int fileInd = Options::Tokenize(argc, argv);
+	int fileInd = Options::Tokenize(argc, argv, ProgParam);
 	if( fileInd < 0 )	return 1;								// wrong option
 	if(!Chrom::SetStatedID(Options::GetSVal(oCHROM))) return 1;	// wrong chrom name
 
@@ -83,7 +85,7 @@ int main(int argc, char* argv[])
 		ChromFiles cFiles(FS::CheckedFileDirName(oGFILE));
 		ChromSizes cSizes(cFiles);
 
-		BedR test("test alignment", aName, &cSizes, 
+		BedR test(ProgParam, aName, &cSizes, 
 			Obj::eInfo (Options::GetIVal(oINFO)), 
 			true, true, Options::GetBVal(oALARM),
 			true,		Options::GetIVal(oMINSCR));
