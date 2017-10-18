@@ -42,7 +42,7 @@ To be sure about **zlib** on your system, type ```whereis zlib```.
 ## Usage
 ```vAlign [options] -g|--gen <name> sequence```
 
-## Help
+### Help
 ```
 Input:
   -g|--gen <name>       reference genome library or single nucleotide sequence. Required
