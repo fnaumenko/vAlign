@@ -43,7 +43,7 @@ const char* infos [] = { "NM", "CNT", "STAT" };	// corresponds to eInfo; iNONE a
 Options::Option Options::_Options [] = {
 	{ 'g', "gen",	1, tNAME, oINPUT, vUNDEF, 0, 0, NULL,
 	"reference genome library or single nucleotide sequence.", NULL },
-	{ 'c', Chrom::Abbr,	0,	tCHAR,	oINPUT, vUNDEF, 0, 0, NULL,	"treat specified chromosome only", NULL },
+	{ 'c', Chrom::Abbr,	0, tNAME,	oINPUT, vUNDEF, 0, 0, NULL,	"treat specified chromosome only", NULL },
 	{ HPH, "min-scr",	0, tINT,	oINPUT, vUNDEF, 0, 1000, NULL, "score threshold for treated reads", NULL },
 	{ HPH, "char-case",	0,	tENUM,	oINPUT, FALSE,	0, 2, (char*)Options::Booleans,
 	"recognize uppercase and lowercase characters in template and test\nas different", NULL },
