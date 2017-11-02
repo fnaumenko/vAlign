@@ -34,9 +34,9 @@ Go to the desired directory and type commands:<br>
 ```cd vAlign-1.0```<br>
 ```make```
 
-If **zlib** is not installed on your system, a message will be displayed from the linker.<br>
-In that case you can compile the program without the ability to work with .gz files. 
-To do this, open *makefile* in any text editor, uncomment last macro in the second line, comment third line, save *makefile*, and try again ```make```.<br>
+If **zlib** is not installed on your system, a linker message will be displayed.<br>
+In that case you can compile the program without the ability to work with .gz files: 
+open *makefile* in any text editor, uncomment last macro in the second line, comment third line, save *makefile*, and try ```make``` again.<br>
 To be sure about **zlib** on your system, type ```whereis zlib```.
 
 ## Usage
@@ -46,7 +46,7 @@ To be sure about **zlib** on your system, type ```whereis zlib```.
 ```
 Input:
   -g|--gen <name>       reference genome library or single nucleotide sequence. Required
-  -c|--chr <chars>      treat specified chromosome only
+  -c|--chr <name>       treat specified chromosome only
   --min-scr <int>       score threshold for treated reads
   --char-case <OFF|ON>  recognize uppercase and lowercase characters in template and test as different [OFF]
 Output:
@@ -84,10 +84,10 @@ One can obtain a genome library in UCSC ftp://hgdownload.soe.ucsc.edu/goldenPath
 In the second case please copy genomic sequences with the same masked type only, f.e. unmasked (‘dna'), since program does not recognise mask’s types.<br>
 This option is required.
 
-```-c|--chr <chars>```<br>
-Treat specified chromosome only. Samples of option’s value: 1, 20, X.<br>
-Reduces run time by 1.5-20 times depending on how far the chromosome is placed in an alignment.<br>
-Default: all.
+```-c|--chr <name>```<br>
+Treat specified chromosome only. 
+```name``` means short chromosome name, i.e. number or  character, for instance ```–c 10```, ```--chr X```.<br>
+The indication of one chromosome reduces run time on 1.5-20 times depending on how far this chromosome is placed in an alignment.
 
 ```--min-scr <int>```<br>
 Score threshold for treated reads. Reads with the score equal or less then specified will be ignored.<br>
